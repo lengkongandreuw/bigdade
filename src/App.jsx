@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import WebGLCanvas from './core/WebGLCanvas'
+import WebGLCanvas from './core/WebGLCanvas' // Mengarah ke src/core/
 import Preloader from './components/Preloader'
 import CustomCursor from './components/CustomCursor/CustomCursor'
 import HomeView from './views/HomeView'
