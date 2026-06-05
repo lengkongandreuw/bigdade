@@ -19,10 +19,6 @@ export default function ParticleBackground() {
     if (pointsRef.current) {
       pointsRef.current.rotation.y = time * 0.05
       pointsRef.current.rotation.x = time * 0.02
-      
-      // Interaksi kursor memutar partikel
-      pointsRef.current.rotation.y += (state.mouse.x * 0.5 - pointsRef.current.rotation.y) * 0.05
-      pointsRef.current.rotation.x += (-state.mouse.y * 0.5 - pointsRef.current.rotation.x) * 0.05
     }
   })
 
