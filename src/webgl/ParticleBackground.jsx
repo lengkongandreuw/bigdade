@@ -4,42 +4,34 @@ import * as THREE from 'three'
 
 export default function ParticleBackground() {
   const pointsRef = useRef()
+  const count = 3000
 
-  // Membuat koordinat acak untuk 2000 titik partikel
-  const count = 2000
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3)
     for (let i = 0; i < count * 3; i++) {
-      pos[i] = (Math.random() - 0.5) * 12
+      pos[i] = (Math.random() - 0.5) * 15
     }
     return pos
   }, [])
 
-  // Animasi rotasi halus partikel di setiap frame jalannya web
   useFrame((state) => {
     const time = state.clock.getElapsedTime()
     if (pointsRef.current) {
       pointsRef.current.rotation.y = time * 0.05
       pointsRef.current.rotation.x = time * 0.02
+      
+      // Interaksi kursor memutar partikel
+      pointsRef.current.rotation.y += (state.mouse.x * 0.5 - pointsRef.current.rotation.y) * 0.05
+      pointsRef.current.rotation.x += (-state.mouse.y * 0.5 - pointsRef.current.rotation.x) * 0.05
     }
   })
 
   return (
     <points ref={pointsRef}>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
-      <pointsMaterial
-        size={0.03}
-        color="#00ffff"
-        sizeAttenuation={true}
-        transparent={true}
-        opacity={0.6}
-        blending={THREE.AdditiveBlending}
-      />
+      <pointsMaterial size={0.02} color="#00ffff" transparent opacity={0.8} blending={THREE.AdditiveBlending} />
     </points>
   )
 }
